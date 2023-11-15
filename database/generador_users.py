@@ -1,15 +1,4 @@
 import random
-names:list = ["Lukas", "Sophie", "Maximilian", "Lena", "Alexander", "Emma", "Paul", "Mia", "Felix",
-                        "Hannah", "Leon", "Anna", "Moritz", "Julia", "Nico", "Laura", "Benjamin", "Lea", "Tim", "Marie"]
-
-email:list = [
-    generate_german_email(name)
-    for name in names
-]
-#creo dni aleatorios
-dni:list = [random.randint(6_000_000, 50_000_000) for in range(100)]
-    
-
 
 def generate_german_email(name):
     """
@@ -25,11 +14,19 @@ def generate_german_email(name):
     >>> generate_german_email("Max")
     'max@gmail.com'
     """
-    domains=["gmail.com", "yahoo.com", "outlook.com"]
+    domains = ["gmail.com", "yahoo.com", "outlook.com"]
     random_domain = random.choice(domains)
-    return f"{name.lower()}@{random_name}.{random_domain}"
+    return f"{name.lower()}@{name.lower()}.{random_domain}"
 
-def create_user(nombre: str = None, email: str = None, dni: int = None) -> (dict):
+_names = ["Lukas", "Sophie", "Maximilian", "Lena", "Alexander", "Emma", "Paul", "Mia", "Felix",
+          "Hannah", "Leon", "Anna", "Moritz", "Julia", "Nico", "Laura", "Benjamin", "Lea", "Tim", "Marie"]
+
+_emails = [generate_german_email(name) for name in _names]
+
+# Creo DNIs aleatorios
+_dni = [random.randint(6_000_000, 50_000_000) for _ in range(100)]
+
+def create_user(nombre: str = None, email: str = None, dni: int = None) -> dict:
     """
     Crea un diccionario representando un usuario con información opcional.
 
@@ -43,9 +40,9 @@ def create_user(nombre: str = None, email: str = None, dni: int = None) -> (dict
     """
     if nombre is None and email is None and dni is None:
         return {
-            "nombre": random.choice(names)
-            "email": random.choice(emails)
-            "dni": random.choice(dni)
+            "nombre": random.choice(_names),
+            "email": random.choice(_emails),
+            "dni": random.choice(_dni)
         }
        
     return {
@@ -54,7 +51,7 @@ def create_user(nombre: str = None, email: str = None, dni: int = None) -> (dict
         "dni": dni,
     }
 
-def create-database(cant_user:int=10):
+def create_database(cant_user: int = 10):
     """
     Crea una base de datos simulada con usuarios.
 
@@ -64,6 +61,5 @@ def create-database(cant_user:int=10):
     Returns:
     list: Una lista que representa la base de datos simulada, con una cantidad de usuarios igual a `cant_user`.
     """
-    return [
-        for _ in range(cant_user)
-    ]
+    database = [create_user() for _ in range(cant_user)]
+    return database
